@@ -1,6 +1,5 @@
 import numpy as np
 import keyboard as kb
-import pandas as pd
 
 def print_win_text(tier: int, week, money: int):
    if tier > 0:
@@ -14,12 +13,12 @@ def play(money: int, weeks: int, often, tables):
       for i in range(often):
          p_tables = []
          for _ in range(tables[i]):
-            p_nums = [np.unique(np.random.randint(low=2, high=51, size=(1, 5))), 
-                     np.unique(np.random.randint(low=2, high=13, size=(1, 2)))]
+            p_nums = [np.random.choice(np.arange(1, 51), 5),
+                      np.random.choice(np.arange(1, 13), 2)]
             p_tables.append(p_nums)
             money -= 2
-         win_nums = [np.unique(np.random.randint(low=2, high=51, size=(1, 5))), 
-                     np.unique(np.random.randint(low=2, high=13, size=(1, 2)))]
+         win_nums = [np.random.choice(np.arange(1, 51), 5),
+                     np.random.choice(np.arange(1, 13), 2)]
          for t in range(tables[i]):
             result_main = np.isin(p_tables[t][0], win_nums[0])
             result_sup = np.isin(p_tables[t][1], win_nums[1])
