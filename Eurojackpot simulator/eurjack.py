@@ -79,6 +79,24 @@ def tables_per_week(often: int):
    else:
       first_draw = input("how many tables do you want to play per week? (max 5) ")
       return np.array([int(first_draw)])
+   
+text_dict = {
+   1 : "How many weeks do you want to play? ",
+   2 : "How much euros do you want to 'invest'? ",
+   3 : "How often do you want to play per week? type 1 or 2 "
+}
+
+def input_check(key: int):
+   user_in_casted = 0
+   while True:
+      user_in = input(text_dict[key])
+      try:
+         user_in_casted = int(user_in)
+      except ValueError:
+         print("Error! Incorrect input")
+         continue
+      break
+   return user_in_casted
 
 print("Rules: one table costs 2 euros\nthere are 12 prize tiers, each prize tier contains the average amount won in the "
 "tier from March 25 2022 to March 14 2025\nthe jackpot is 51 million euros\n"
@@ -86,13 +104,14 @@ print("Rules: one table costs 2 euros\nthere are 12 prize tiers, each prize tier
 
 playing = True
 while playing == True:
-   print()
-   played_weeks = input("How many weeks do you want to play? ")
-   player_money = input("How much euros do you want to 'invest'? ")
-   how_often = input("How often do you want to play per week? type 1 or 2 ")
+   weeks = input_check(1)
+   money = input_check(2)
+   how_often = input_check(3)
    tables_num = tables_per_week(int(how_often))
-   play(int(player_money), int(played_weeks), int(how_often), tables_num)
+
+   play(money, weeks, how_often, tables_num)
    print("Press escape to exit, or any other key to play again (EXCEPT ENTER :( )")
+
    event = kb.read_event()
    if event.event_type == kb.KEY_DOWN and event.name == 'esc':
       playing = False
