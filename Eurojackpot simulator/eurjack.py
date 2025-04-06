@@ -83,10 +83,13 @@ def tables_per_week(often: int):
 text_dict = {
    1 : "How many weeks do you want to play? ",
    2 : "How much euros do you want to 'invest'? ",
-   3 : "How often do you want to play per week? type 1 or 2 "
+   3 : "How often do you want to play per week? type 1 or 2 ",
+   4 : ""
 }
 
 def input_check(key: int):
+   if key == 4:
+      return tables_per_week(how_often)
    user_in_casted = 0
    while True:
       user_in = input(text_dict[key])
@@ -107,7 +110,7 @@ while playing == True:
    weeks = input_check(1)
    money = input_check(2)
    how_often = input_check(3)
-   tables_num = tables_per_week(int(how_often))
+   tables_num = input_check(4)
 
    play(money, weeks, how_often, tables_num)
    print("Press escape to exit, or any other key to play again (EXCEPT ENTER :( )")
