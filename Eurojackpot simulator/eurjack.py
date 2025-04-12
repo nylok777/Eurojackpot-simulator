@@ -1,5 +1,8 @@
 import numpy as np
 import keyboard as kb
+from numpy.random import Generator, PCG64
+
+generator = Generator(PCG64())
 
 def print_win_text(tier: int, week, money: int):
    if tier > 0:
@@ -13,12 +16,12 @@ def play(money: int, weeks: int, often, tables):
       for i in range(often):
          p_tables = []
          for _ in range(tables[i]):
-            p_nums = [np.random.choice(np.arange(1, 51), 5),
-                      np.random.choice(np.arange(1, 13), 2)]
+            p_nums = [generator.choice(np.arange(1, 51), (5, 1), replace=False),
+                      generator.choice(np.arange(1, 13), (2, 1), replace=False)]
             p_tables.append(p_nums)
             money -= 2
-         win_nums = [np.random.choice(np.arange(1, 51), 5),
-                     np.random.choice(np.arange(1, 13), 2)]
+         win_nums = [generator.choice(np.arange(1, 51), (5, 1), replace=False),
+                     generator.choice(np.arange(1, 13), (2, 1), replace=False)]
          for t in range(tables[i]):
             result_main = np.isin(p_tables[t][0], win_nums[0])
             result_sup = np.isin(p_tables[t][1], win_nums[1])
@@ -101,7 +104,7 @@ def input_check(key: int):
       break
    return user_in_casted
 
-print("Rules: one table costs 2 euros\nthere are 12 prize tiers, each prize tier contains the average amount won in the "
+print("Rules: one ticket costs 2 euros\nthere are 12 prize tiers, each prize tier contains the average amount won in the "
 "tier from March 25 2022 to March 14 2025\nthe jackpot is 51 million euros\n"
 "you only stop playing if you win the jackpot or the 2 tiers below it")
 
