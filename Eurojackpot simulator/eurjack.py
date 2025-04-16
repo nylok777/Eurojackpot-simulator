@@ -6,13 +6,16 @@ generator = Generator(PCG64())
 
 def print_win_text(tier: int, week, money: int):
    if tier > 0:
-      print(f"You won the {tier}. tier at the {week}. week! Your balance after winning: {money}")
+      print(f"You won the {tier}. tier on the {week}. week! Your balance after winning: {money}")
    else:
-      print(f"Sadly, you didn't win anything at the {week}. week. Your balance after losing: {money}")
+      print(f"Sadly, you didn't win anything on the {week}. week. Your balance after losing: {money}")
 
 def play(money: int, weeks: int, often, tables):
    weeks_ar = np.arange(1, weeks+1)
    for week in weeks_ar:
+      if money < 2:
+         print("You ran out of money!")
+         break
       for i in range(often):
          p_tables = []
          for _ in range(tables[i]):
@@ -28,50 +31,50 @@ def play(money: int, weeks: int, often, tables):
             if result_main.all():
                if result_sup.all():
                   money += 51400000
-                  print_win_text(1,week=week,money=money)
+                  print_win_text(1,week, money)
                   return money
                elif result_sup.any():
                   money += 1330000
-                  print_win_text(2,week=week,money=money)
+                  print_win_text(2,week, money)
                   return money
                else:
                   money += 196854
-                  print_win_text(3,week=week,money=money)
+                  print_win_text(3,week, money)
                   return money
             elif np.sum(result_main) == 4:
                if result_sup.all():
                   money += 5633
-                  print_win_text(4,week=week,money=money)
+                  print_win_text(4,week, money)
                elif result_sup.any():
                   money += 325
-                  print_win_text(5,week=week,money=money)
+                  print_win_text(5,week, money)
                else:
                   money += 113
-                  print_win_text(7,week=week,money=money)
+                  print_win_text(7,week, money)
             elif np.sum(result_main) == 3:
                if result_sup.all():
                   money += 164
-                  print_win_text(6,week=week,money=money)
+                  print_win_text(6,week, money)
                elif result_sup.any():
                   money += 20
-                  print_win_text(9,week=week,money=money)
+                  print_win_text(9,week, money)
                else:
                   money += 17
-                  print_win_text(10,week=week,money=money)
+                  print_win_text(10,week, money)
             elif np.sum(result_main) == 2:
                if result_sup.all():
                   money += 26
-                  print_win_text(8,week=week,money=money)
+                  print_win_text(8,week, money)
                elif result_sup.any():
                   money += 10
-                  print_win_text(12,week=week,money=money)
+                  print_win_text(12,week, money)
                else:
-                  print_win_text(0,week=week,money=money)
+                  print_win_text(0,week, money)
             elif result_main.any() and result_sup.all():
                money += 13
-               print_win_text(11,week=week,money=money)
+               print_win_text(11,week, money)
             else:
-               print_win_text(0,week=week,money=money)
+               print_win_text(0,week, money)
    print(f"Your final balance after playing Eurojackpot for {weeks} weeks: {money}")
 
 def tables_per_week(often: int):
